@@ -5,8 +5,6 @@ Maybe some people would call it "Ambilight" ;)
 
 The Arduino sketch is written in standard C and the Windows application in C#.
 
-If you want to compile the 
-
 How to use:
 ===========
 
