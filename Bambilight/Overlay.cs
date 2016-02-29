@@ -123,8 +123,6 @@ namespace Bambilight {
                     } catch (Exception ex) {
                         Console.Write(ex);
                     }
-
-                    mGraphics.Dispose();
                 }
             }
 
