@@ -17,6 +17,10 @@ you only need the contents of the "Binary" folder and the bambilight.ino Arduino
 
 3. Start the Bambilight tool and configure your screen setup (maybe overlay mode helps).
 
+Videos:
+=======
+
+Demo-Video: https://www.youtube.com/watch?v=isHl0YpEQ1A
 
 Future Features:
 ================
