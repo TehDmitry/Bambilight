@@ -6,13 +6,25 @@ Maybe some people would call it "Ambilight" ;)
 
 The Arduino sketch is written in standard C and the Windows application in C#.
 
+Requirements:
+=============
+
+- Arduino or compatible device
+
+- Optional AC adapter if using too many LEDs. USB provides 500mA (USB2.0) or 1000mA (USB3.0)
+  and each LED (in example "WS2812B") can pull up to 60mA per LED on full brightness.
+
+- Windows PC with DirectX9 and hardware accelerated graphics
+
+- FastLED compatible LED-Stripe (See: https://github.com/FastLED/FastLED/wiki/Chipset-reference)
+
 How to use:
 ===========
 
 !!! If you just want to use Bambilight without compiling the Windows application by yourself,
 you only need the contents of the "Binary" folder and the bambilight.ino Arduino sketch. !!!
 
-1. Customize the .ino sketch (NUM_LEDS, LED_DATA_PIN) and flash it to your arduino device.
+1. Customize the .ino sketch (NUM_LEDS, LED_DATA_PIN, LED_TYPE) and flash it to your arduino device.
 
 2. Connect the arranged LED-Stripe to your arduino device and the arduino to your PC.
 
@@ -47,4 +59,4 @@ Third-Party:
 ============
 
 - Using SlimDX Library in Version 4.0.13.44 (Copyright (c) 2007-2011 SlimDX Group)
-- Using FastLED Library in Version3.1 (Copyright (c) 2013 FastLED)
+- Using FastLED Library in Version 3.1 (Copyright (c) 2013 FastLED)
