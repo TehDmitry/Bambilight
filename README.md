@@ -47,3 +47,4 @@ Third-Party:
 ============
 
 - Using SlimDX Library in Version 4.0.13.44 (Copyright (c) 2007-2011 SlimDX Group)
+- Using FastLED Library in Version3.1 (Copyright (c) 2013 FastLED)
