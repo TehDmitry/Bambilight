@@ -2,6 +2,9 @@
 
 #define NUM_LEDS 28
 #define LED_DATA_PIN 3
+#define LED_TYPE WS2812B
+
+
 #define NUM_BYTES (NUM_LEDS*3) // 3 colors  
 
 #define BRIGHTNESS 50
@@ -35,7 +38,7 @@ void setup()
 {
   Serial.begin(115200);
   FastLED.clear(true);
-  FastLED.addLeds<WS2812B, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
+  FastLED.addLeds<LED_TYPE, LED_DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(BRIGHTNESS);
 }
 
