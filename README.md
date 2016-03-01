@@ -11,8 +11,7 @@ Requirements:
 
 - Arduino or compatible device
 
-- Optional AC adapter if using too many LEDs. USB provides 500mA (USB2.0) or 1000mA (USB3.0)
-  and each LED (in example "WS2812B") can pull up to 60mA per LED on full brightness.
+- Optional AC adapter if using too many LEDs. USB provides 500mA (USB2.0) or 1000mA (USB3.0) and each LED (in example "WS2812B") can pull up to 60mA per LED on full brightness. Note that the microcontroller needs about 50mA by itself.
 
 - Windows PC with DirectX9 and hardware accelerated graphics
 
