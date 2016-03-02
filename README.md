@@ -32,12 +32,13 @@ you only need the contents of the "Binary" folder and the bambilight.ino Arduino
 Videos:
 =======
 
+Tutorial-Video: https://www.youtube.com/watch?v=YVqrkDVoCfs
 Demo-Video: https://www.youtube.com/watch?v=isHl0YpEQ1A
 
 Future Features:
 ================
 
-- Some faster screen capturing. Depending on system the capturing takes about 30-40ms
+- Some faster screen capturing. Depending on system the capturing takes about 20-40ms
 
 - Serial speed calculations for max led setting
 
