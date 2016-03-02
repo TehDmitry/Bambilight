@@ -6,6 +6,7 @@ Maybe some people would call it "Ambilight" ;)
 
 The Arduino sketch is written in standard C and the Windows application in C#.
 
+
 Requirements:
 =============
 
@@ -16,6 +17,7 @@ Requirements:
 - Windows PC with DirectX9 and hardware accelerated graphics
 
 - FastLED compatible LED-Stripe (See: https://github.com/FastLED/FastLED/wiki/Chipset-reference)
+
 
 How to use:
 ===========
@@ -29,11 +31,14 @@ you only need the contents of the "Binary" folder and the bambilight.ino Arduino
 
 3. Start the Bambilight tool and configure your screen setup (maybe overlay mode helps).
 
+
 Videos:
 =======
 
 Tutorial-Video: https://www.youtube.com/watch?v=YVqrkDVoCfs
+
 Demo-Video: https://www.youtube.com/watch?v=isHl0YpEQ1A
+
 
 Future Features:
 ================
