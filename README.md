@@ -19,27 +19,43 @@ Changelog:
 - Init Release
 
 
+Requirements:
+=============
+
+- Arduino or compatible device
+
+- Optional AC adapter if using too many LEDs. USB provides 500mA (USB2.0) or 1000mA (USB3.0) and each LED (in example "WS2812B") can pull up to 60mA per LED on full brightness. Note that the microcontroller needs about 50mA by itself.
+
+- Windows PC with DirectX9 and hardware accelerated graphics
+
+- FastLED compatible LED-Stripe (See: https://github.com/FastLED/FastLED/wiki/Chipset-reference)
+
+
 How to use:
 ===========
 
 !!! If you just want to use Bambilight without compiling the Windows application by yourself,
 you only need the contents of the "Binary" folder and the bambilight.ino Arduino sketch. !!!
 
-1. Customize the .ino sketch (NUM_LEDS, LED_DATA_PIN) and flash it to your arduino device.
+1. Customize the .ino sketch (NUM_LEDS, LED_DATA_PIN, LED_TYPE) and flash it to your arduino device.
 
 2. Connect the arranged LED-Stripe to your arduino device and the arduino to your PC.
 
 3. Start the Bambilight tool and configure your screen setup (maybe overlay mode helps).
 
+
 Videos:
 =======
 
+Tutorial-Video: https://www.youtube.com/watch?v=YVqrkDVoCfs
+
 Demo-Video: https://www.youtube.com/watch?v=isHl0YpEQ1A
+
 
 Future Features:
 ================
 
-- Some faster screen capturing. Depending on system the capturing takes about 30-40ms
+- Some faster screen capturing. Depending on system the capturing takes about 20-40ms
 
 - Serial speed calculations for max led setting
 
@@ -60,3 +76,4 @@ Third-Party:
 ============
 
 - Using SlimDX Library in Version 4.0.13.44 (Copyright (c) 2007-2011 SlimDX Group)
+- Using FastLED Library in Version 3.1 (Copyright (c) 2013 FastLED)
