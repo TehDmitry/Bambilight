@@ -13,8 +13,6 @@ namespace Bambilight {
         private const int COLORS_PER_LED = 3;
         private const int DATASTREAM_BYTES_PER_PIXEL = 4;
 
-        private Device mDevice;
-        private Direct3D mDirect3D;
         private BackgroundWorker mBackgroundWorker = new BackgroundWorker();
 
         private byte[] mColorBufferTopLeft = new byte[DATASTREAM_BYTES_PER_PIXEL];
@@ -25,13 +23,6 @@ namespace Bambilight {
         private int[] mColorBuffer = new int[COLORS_PER_LED];
 
         public DxScreenCapture() {
-            mDirect3D = new Direct3D();
-
-            PresentParameters present_params = new PresentParameters();
-            present_params.Windowed = true;
-            present_params.SwapEffect = SwapEffect.Discard;
-            mDevice = new Device(mDirect3D, 0, DeviceType.Hardware, IntPtr.Zero, CreateFlags.SoftwareVertexProcessing, present_params);
-
             mBackgroundWorker.DoWork += mBackgroundWorker_DoWork;
             mBackgroundWorker.WorkerSupportsCancellation = true;
         }
@@ -50,15 +41,22 @@ namespace Bambilight {
 
         private void mBackgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
 
+            Direct3D direct3D = new Direct3D();
+
+            PresentParameters present_params = new PresentParameters();
+            present_params.Windowed = true;
+            present_params.SwapEffect = SwapEffect.Discard;
+            Device device = new Device(direct3D, 0, DeviceType.Hardware, IntPtr.Zero, CreateFlags.SoftwareVertexProcessing, present_params);
+
             while (!mBackgroundWorker.CancellationPending) {
 
-                Surface surface = Surface.CreateOffscreenPlain(mDevice,
+                Surface surface = Surface.CreateOffscreenPlain(device,
                     Screen.PrimaryScreen.Bounds.Width,
                     Screen.PrimaryScreen.Bounds.Height,
                     Format.A8R8G8B8,
                     Pool.Scratch);
 
-                mDevice.GetFrontBufferData(0, surface);
+                device.GetFrontBufferData(0, surface);
 
                 DataRectangle dataRectangle = surface.LockRectangle(LockFlags.None);
                 DataStream dataStream = dataRectangle.Data;
@@ -98,7 +96,11 @@ namespace Bambilight {
 
                 surface.UnlockRectangle();
                 surface.Dispose();
+                
             }
+
+            device.Dispose();
+            direct3D.Dispose();
 
             e.Cancel = true;
         }
@@ -120,9 +122,6 @@ namespace Bambilight {
                 Stop();
 
                 mBackgroundWorker.Dispose();
-
-                mDevice.Dispose();
-                mDirect3D.Dispose();
             }
         }
     }

@@ -241,7 +241,7 @@ namespace Bambilight.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int MINIMUM_REFRESH_RATE_MS {
             get {
                 return ((int)(this["MINIMUM_REFRESH_RATE_MS"]));

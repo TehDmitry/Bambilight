@@ -6,6 +6,19 @@ Maybe some people would call it "Ambilight" ;)
 
 The Arduino sketch is written in standard C and the Windows application in C#.
 
+
+Changelog:
+==========
+
+11.03.2016 - V1.0.0.1
+- Changed minimum limit of field "MINIMUM_REFRESH_RATE_MS" from 20 to 0 for better refresh rate on older devices
+- Fixed: Wrong disposing of Direct3D device when energy saving => no color update after wake up
+- Changed some minor visual studio project settings
+
+02.03.2016 - V1.0.0.0
+- Init Release
+
+
 How to use:
 ===========
 

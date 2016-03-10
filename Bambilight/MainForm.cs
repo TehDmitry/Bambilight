@@ -136,7 +136,7 @@ namespace Bambilight {
             numericUpDownLedOffset.Minimum = 0;
             numericUpDownLedOffset.Maximum = 500;
 
-            numericUpDownMinimumRefreshRateMs.Minimum = 20;
+            numericUpDownMinimumRefreshRateMs.Minimum = 0;
             numericUpDownMinimumRefreshRateMs.Maximum = 1000;
         }
 
@@ -325,6 +325,7 @@ namespace Bambilight {
                 mDxScreenCapture.Start();
             } else {
                 mDxScreenCapture.Stop();
+                mDxScreenCapture = null;
             }
         }
 
@@ -375,6 +376,7 @@ namespace Bambilight {
             }
             if (null != mDxScreenCapture) {
                 mDxScreenCapture.Stop();
+                mDxScreenCapture = null;
             }
         }
     }
