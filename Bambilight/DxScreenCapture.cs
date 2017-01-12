@@ -12,14 +12,12 @@ namespace Bambilight {
 
         private const int COLORS_PER_LED = 3;
         private const int DATASTREAM_BYTES_PER_PIXEL = 4;
+        private const int AVERAGE_PIXEL_GRID_STEP = 8;
 
         private BackgroundWorker mBackgroundWorker = new BackgroundWorker();
 
-        private byte[] mColorBufferTopLeft = new byte[DATASTREAM_BYTES_PER_PIXEL];
-        private byte[] mColorBufferTopRight = new byte[DATASTREAM_BYTES_PER_PIXEL];
-        private byte[] mColorBufferCenter = new byte[DATASTREAM_BYTES_PER_PIXEL];
-        private byte[] mColorBufferBottomLeft = new byte[DATASTREAM_BYTES_PER_PIXEL];
-        private byte[] mColorBufferBottomRight = new byte[DATASTREAM_BYTES_PER_PIXEL];
+        private byte[] mColorBufferSpot = new byte[DATASTREAM_BYTES_PER_PIXEL];
+        private long[] mColorSumSpot = new long[COLORS_PER_LED];
         private int[] mColorBuffer = new int[COLORS_PER_LED];
 
         public DxScreenCapture() {
@@ -48,6 +46,9 @@ namespace Bambilight {
             present_params.SwapEffect = SwapEffect.Discard;
             Device device = new Device(direct3D, 0, DeviceType.Hardware, IntPtr.Zero, CreateFlags.SoftwareVertexProcessing, present_params);
 
+            int pixelCount;
+            int ScreenWidth = Program.ScreenWidth;
+
             while (!mBackgroundWorker.CancellationPending) {
 
                 Surface surface = Surface.CreateOffscreenPlain(device,
@@ -68,22 +69,32 @@ namespace Bambilight {
                             && spot.BottomLeft.DxPos >= 0 
                             && spot.BottomRight.DxPos >= 0) {
 
-                            dataStream.Position = spot.TopLeft.DxPos;
-                            dataStream.Read(mColorBufferTopLeft, 0, 4);
+                            pixelCount = 0;
+                            for (int i = 0; i < COLORS_PER_LED; i++)
+                            {
+                                mColorSumSpot[i] = 0;
+                            }
+                            
+                            for (long Y = spot.Rectangle.Y; Y < spot.Rectangle.Y + spot.Rectangle.Width; Y += AVERAGE_PIXEL_GRID_STEP)
+                            {
+                                for (long X = spot.Rectangle.X; X < spot.Rectangle.X + spot.Rectangle.Height; X += AVERAGE_PIXEL_GRID_STEP)
+                                {
+                                    long Position = (Y * ScreenWidth + X) * DATASTREAM_BYTES_PER_PIXEL;
+                                    dataStream.Position = Position;
+                                    dataStream.Read(mColorBufferSpot, 0, 4);
 
-                            dataStream.Position = spot.TopRight.DxPos;
-                            dataStream.Read(mColorBufferTopRight, 0, 4);
+                                    for (int i = 0; i < COLORS_PER_LED; i++)
+                                    {
+                                        mColorSumSpot[i] += mColorBufferSpot[i];
+                                    }
+                                    pixelCount++;
+                                }
+                            }
 
-                            dataStream.Position = spot.Center.DxPos;
-                            dataStream.Read(mColorBufferCenter, 0, 4);
-
-                            dataStream.Position = spot.BottomLeft.DxPos;
-                            dataStream.Read(mColorBufferBottomLeft, 0, 4);
-
-                            dataStream.Position = spot.BottomRight.DxPos;
-                            dataStream.Read(mColorBufferBottomRight, 0, 4);
-
-                            averageValues();
+                            for (int i = 0; i < COLORS_PER_LED; i++)
+                            {
+                                mColorBuffer[i] = (byte)(mColorSumSpot[i]/ pixelCount); 
+                            }
 
                             if (mColorBuffer[0] <= Settings.SaturationTreshold) { mColorBuffer[0] = 0x00; } //blue
                             if (mColorBuffer[1] <= Settings.SaturationTreshold) { mColorBuffer[1] = 0x00; } // green
@@ -103,13 +114,6 @@ namespace Bambilight {
             direct3D.Dispose();
 
             e.Cancel = true;
-        }
-
-        private void averageValues() {
-            for (int i = 0; i < COLORS_PER_LED; i++) {
-                int temp = (int)(mColorBufferTopLeft[i] + mColorBufferTopRight[i] + mColorBufferCenter[i] + mColorBufferBottomLeft[i] + mColorBufferBottomRight[i]) / 5;
-                mColorBuffer[i] = (byte)temp;
-            }
         }
 
         public void Dispose() {
